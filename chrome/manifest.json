@@ -1,0 +1,59 @@
+{
+  "manifest_version": 3,
+  "name": "Dilo — Lee en voz alta",
+  "version": "0.1.0",
+  "description": "Escucha el texto seleccionado, páginas completas y las respuestas de los asistentes de IA (Claude, ChatGPT, Gemini).",
+  "icons": {
+    "16": "iconos/16.png",
+    "32": "iconos/32.png",
+    "48": "iconos/48.png",
+    "128": "iconos/128.png"
+  },
+  "action": {
+    "default_title": "Dilo",
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "iconos/16.png",
+      "32": "iconos/32.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": [
+    "contextMenus",
+    "tts",
+    "storage",
+    "activeTab"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "limpiar.js",
+        "sitios.js",
+        "content.js"
+      ],
+      "run_at": "document_idle",
+      "all_frames": false
+    }
+  ],
+  "commands": {
+    "leer-seleccion": {
+      "suggested_key": {
+        "default": "Alt+Shift+R"
+      },
+      "description": "Leer la selección (o la última respuesta en Claude/ChatGPT)"
+    },
+    "detener": {
+      "suggested_key": {
+        "default": "Alt+Shift+S"
+      },
+      "description": "Detener la lectura"
+    }
+  },
+  "short_name": "Dilo",
+  "homepage_url": "https://github.com/chundo/dilo"
+}

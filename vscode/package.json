@@ -1,0 +1,221 @@
+{
+  "name": "dilo",
+  "displayName": "Dilo",
+  "description": "Dilo lee en voz alta el texto seleccionado, archivos Markdown y las respuestas de Claude Code.",
+  "version": "0.1.0",
+  "publisher": "chundo",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "keywords": [
+    "tts",
+    "text to speech",
+    "read aloud",
+    "voz",
+    "markdown",
+    "claude",
+    "accessibility",
+    "accesibilidad"
+  ],
+  "main": "./src/extension.js",
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "icon": "images/icono.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/chundo/dilo",
+    "directory": "vscode"
+  },
+  "bugs": {
+    "url": "https://github.com/chundo/dilo/issues"
+  },
+  "homepage": "https://github.com/chundo/dilo#readme",
+  "contributes": {
+    "commands": [
+      {
+        "command": "dilo.leerSeleccion",
+        "title": "Leer en voz alta",
+        "category": "Dilo",
+        "icon": "$(unmute)"
+      },
+      {
+        "command": "dilo.leerSeleccionWebview",
+        "title": "🔊 Leer en voz alta",
+        "category": "Dilo"
+      },
+      {
+        "command": "dilo.leerDocumento",
+        "title": "Leer todo el documento",
+        "category": "Dilo",
+        "icon": "$(unmute)"
+      },
+      {
+        "command": "dilo.leerUltimaRespuesta",
+        "title": "Leer última respuesta de Claude",
+        "category": "Dilo",
+        "icon": "$(unmute)"
+      },
+      {
+        "command": "dilo.leerPortapapeles",
+        "title": "Leer el portapapeles",
+        "category": "Dilo"
+      },
+      {
+        "command": "dilo.detener",
+        "title": "Detener lectura",
+        "category": "Dilo",
+        "icon": "$(debug-stop)"
+      },
+      {
+        "command": "dilo.toggleAuto",
+        "title": "Activar/desactivar lectura automática de Claude",
+        "category": "Dilo"
+      },
+      {
+        "command": "dilo.elegirVoz",
+        "title": "Elegir voz",
+        "category": "Dilo"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "command": "dilo.leerSeleccion",
+          "when": "editorHasSelection",
+          "group": "9_cutcopypaste@99"
+        },
+        {
+          "command": "dilo.leerDocumento",
+          "when": "!editorHasSelection && resourceLangId == markdown",
+          "group": "9_cutcopypaste@99"
+        },
+        {
+          "command": "dilo.detener",
+          "when": "dilo.hablando",
+          "group": "9_cutcopypaste@100"
+        }
+      ],
+      "webview/context": [
+        {
+          "command": "dilo.leerSeleccionWebview",
+          "group": "0_dilo@1"
+        },
+        {
+          "command": "dilo.leerUltimaRespuesta",
+          "when": "webviewId =~ /claude/i",
+          "group": "0_dilo@2"
+        },
+        {
+          "command": "dilo.detener",
+          "when": "dilo.hablando",
+          "group": "0_dilo@3"
+        }
+      ],
+      "editor/title": [
+        {
+          "command": "dilo.leerDocumento",
+          "when": "!dilo.hablando && (resourceLangId == markdown || activeWebviewPanelId == 'markdown.preview')",
+          "group": "navigation@-1"
+        },
+        {
+          "command": "dilo.detener",
+          "when": "dilo.hablando",
+          "group": "navigation@-1"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "dilo.leerSeleccionWebview",
+          "when": "false"
+        }
+      ]
+    },
+    "keybindings": [
+      {
+        "command": "dilo.leerSeleccion",
+        "key": "ctrl+alt+r",
+        "mac": "cmd+alt+r",
+        "when": "editorTextFocus && editorHasSelection"
+      },
+      {
+        "command": "dilo.leerUltimaRespuesta",
+        "key": "ctrl+alt+l",
+        "mac": "cmd+alt+l",
+        "when": "!editorTextFocus || !editorHasSelection"
+      },
+      {
+        "command": "dilo.detener",
+        "key": "ctrl+alt+.",
+        "mac": "cmd+alt+."
+      }
+    ],
+    "configuration": {
+      "title": "Dilo",
+      "properties": {
+        "dilo.motor": {
+          "type": "string",
+          "enum": [
+            "say",
+            "edge-tts"
+          ],
+          "enumDescriptions": [
+            "Voz del sistema de macOS (gratis, sin internet)",
+            "Voces neuronales de Microsoft vía edge-tts (gratis, requiere internet y `pipx install edge-tts`)"
+          ],
+          "default": "say",
+          "description": "Motor de texto a voz."
+        },
+        "dilo.vozSay": {
+          "type": "string",
+          "default": "",
+          "description": "Voz para `say` (ej. Paulina, Mónica, Jorge). Vacío = voz del sistema. Usa el comando 'Elegir voz' para ver las instaladas."
+        },
+        "dilo.velocidadSay": {
+          "type": "number",
+          "default": 200,
+          "description": "Palabras por minuto para `say` (175–220 es cómodo)."
+        },
+        "dilo.vozEdge": {
+          "type": "string",
+          "default": "es-CO-SalomeNeural",
+          "description": "Voz para edge-tts (ej. es-CO-SalomeNeural, es-CO-GonzaloNeural, es-MX-DaliaNeural, es-ES-ElviraNeural)."
+        },
+        "dilo.velocidadEdge": {
+          "type": "string",
+          "default": "+10%",
+          "description": "Velocidad para edge-tts, en porcentaje (ej. +0%, +15%, -10%)."
+        },
+        "dilo.rutaEdgeTts": {
+          "type": "string",
+          "default": "edge-tts",
+          "description": "Ruta al ejecutable edge-tts si no está en el PATH de VS Code (ej. ~/.local/bin/edge-tts)."
+        },
+        "dilo.omitirCodigo": {
+          "type": "boolean",
+          "default": true,
+          "description": "Saltar bloques de código al leer Markdown."
+        },
+        "dilo.autoLeerClaude": {
+          "type": "boolean",
+          "default": false,
+          "description": "Leer automáticamente cada respuesta de Claude Code cuando termina."
+        },
+        "dilo.carpetaClaude": {
+          "type": "string",
+          "default": "~/.claude/projects",
+          "description": "Carpeta donde Claude Code guarda las sesiones (.jsonl)."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "sync": "node ../scripts/sync-shared.js",
+    "vscode:prepublish": "node ../scripts/sync-shared.js",
+    "package": "vsce package"
+  }
+}

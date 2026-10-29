@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Dilo</title>
+<style>
+  :root { --fondo:#fff; --texto:#111827; --suave:#6b7280; --borde:#e5e7eb; --acento:#d97706; --boton:#1f2937; --botonTexto:#fff; }
+  @media (prefers-color-scheme: dark) {
+    :root { --fondo:#18181b; --texto:#f4f4f5; --suave:#a1a1aa; --borde:#3f3f46; --boton:#f4f4f5; --botonTexto:#18181b; }
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; width:320px; padding:14px; font:13px/1.4 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background:var(--fondo); color:var(--texto); }
+  h1 { font-size:15px; margin:0 0 12px; display:flex; align-items:center; gap:8px; }
+  h1 img { width:20px; height:20px; }
+  .acciones { display:grid; grid-template-columns:1fr 1fr; gap:6px; margin-bottom:14px; }
+  button { font:inherit; border:0; border-radius:8px; padding:8px 10px; cursor:pointer; background:var(--boton); color:var(--botonTexto); }
+  button.secundario { background:transparent; color:var(--texto); border:1px solid var(--borde); }
+  #detener { grid-column:1 / -1; background:var(--acento); color:#fff; display:none; }
+  body.hablando #detener { display:block; }
+  label { display:block; color:var(--suave); margin:10px 0 4px; font-size:12px; }
+  select, input[type=range] { width:100%; }
+  select { font:inherit; padding:6px; border-radius:6px; border:1px solid var(--borde); background:var(--fondo); color:var(--texto); }
+  .fila { display:flex; align-items:center; gap:8px; }
+  .fila output { min-width:38px; text-align:right; color:var(--suave); }
+  .check { display:flex; align-items:center; gap:8px; color:var(--texto); margin:8px 0 0; font-size:13px; }
+  .pie { margin-top:12px; padding-top:10px; border-top:1px solid var(--borde); color:var(--suave); font-size:11px; }
+  kbd { font:11px ui-monospace, Menlo, monospace; border:1px solid var(--borde); border-radius:4px; padding:0 4px; }
+  a { color:inherit; }
+</style>
+</head>
+<body>
+  <h1><img src="iconos/32.png" alt="">Dilo</h1>
+
+  <div class="acciones">
+    <button id="leerSeleccion">Leer selección</button>
+    <button id="leerPagina" class="secundario">Leer página</button>
+    <button id="detener">⏹ Detener</button>
+  </div>
+
+  <label for="voz">Voz</label>
+  <div class="fila">
+    <select id="voz"></select>
+    <button id="probar" class="secundario" title="Escuchar">▶</button>
+  </div>
+
+  <label for="velocidad">Velocidad</label>
+  <div class="fila">
+    <input id="velocidad" type="range" min="0.6" max="2" step="0.05">
+    <output id="velocidadValor"></output>
+  </div>
+
+  <label class="check"><input type="checkbox" id="omitirCodigo"> Saltar bloques de código</label>
+  <label class="check"><input type="checkbox" id="botonFlotante"> Mostrar 🔊 al seleccionar texto</label>
+  <label class="check"><input type="checkbox" id="botonesIA"> 🔊 en respuestas de Claude, ChatGPT y Gemini</label>
+
+  <div class="pie">
+    Clic derecho → <b>Leer en voz alta</b> · <kbd>⌥⇧R</kbd> leer · <kbd>⌥⇧S</kbd> detener<br>
+    <a href="#" id="atajos">Cambiar atajos</a>
+    <div id="diagnostico"></div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

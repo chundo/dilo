@@ -1,0 +1,27 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: shared/limpiar.js sincronizado
+        run: npm run check
+      - name: Tests
+        run: npm test
+      - name: Sintaxis
+        run: for f in vscode/src/*.js chrome/*.js scripts/*.js; do node --check "$f"; done
+      - name: Empaquetar
+        run: npm run build
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dilo
+          path: dist/
