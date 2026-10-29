@@ -3,13 +3,17 @@
   "private": true,
   "description": "Dilo: escucha en voz alta texto, Markdown y respuestas de IA. Extensiones para VS Code y Chrome.",
   "license": "MIT",
-  "repository": { "type": "git", "url": "https://github.com/chundo/dilo" },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/chundo/dilo"
+  },
   "scripts": {
     "sync": "node scripts/sync-shared.js",
     "check": "node scripts/sync-shared.js --check",
     "test": "node --test tests/*.test.js",
     "build:vscode": "npm run sync && node -e \"require('fs').mkdirSync('dist',{recursive:true})\" && cd vscode && npx --yes @vscode/vsce package --out ../dist/",
     "build:chrome": "npm run sync && node scripts/zip-chrome.js",
-    "build": "npm run build:vscode && npm run build:chrome"
+    "build": "npm run build:vscode && npm run build:chrome",
+    "bump": "node scripts/version.js"
   }
 }

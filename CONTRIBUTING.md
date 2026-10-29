@@ -60,7 +60,14 @@ The UI is in Spanish. If you'd like to add English or another language, open an 
 
 ## Releases (maintainers)
 
+Pushing a `v*` tag triggers `.github/workflows/release.yml`, which builds both extensions and publishes a GitHub release with `dilo-x.y.z.vsix` and `dilo-chrome-x.y.z.zip` attached.
+
 ```bash
-npm run build                       # dist/dilo-x.y.z.vsix + dist/dilo-chrome-x.y.z.zip
-gh release create vX.Y.Z dist/* --generate-notes
+npm run bump -- patch        # or minor / major / 0.2.0 — updates vscode/ and chrome/
+git add -A
+git commit -m "Versión 0.1.1"
+git tag v0.1.1
+git push origin main --tags
 ```
+
+The workflow fails if the tag doesn't match the versions in `vscode/package.json` and `chrome/manifest.json`.

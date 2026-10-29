@@ -1,0 +1,40 @@
+name: Release
+
+# Se ejecuta al subir un tag de versión:  git push origin v0.1.0
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Verificar que el tag coincide con la versión
+        run: |
+          TAG="${GITHUB_REF_NAME#v}"
+          VS=$(node -p "require('./vscode/package.json').version")
+          CR=$(node -p "require('./chrome/manifest.json').version")
+          echo "tag=$TAG vscode=$VS chrome=$CR"
+          if [ "$TAG" != "$VS" ] || [ "$TAG" != "$CR" ]; then
+            echo "::error::El tag v$TAG no coincide con las versiones (vscode $VS, chrome $CR). Usa: npm run bump -- $TAG"
+            exit 1
+          fi
+
+      - run: npm run check
+      - run: npm test
+      - run: npm run build
+
+      - name: Publicar release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: Dilo ${{ github.ref_name }}
+          generate_release_notes: true
+          files: dist/*
