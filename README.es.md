@@ -38,7 +38,7 @@ Descarga `dilo-x.y.z.vsix` desde [Releases](https://github.com/chundo/dilo/relea
 | Panel de Claude Code | Clic derecho → **Leer última respuesta de Claude** (`⌘⌥L`) |
 | Barra de estado | 🔊 lee la última respuesta de Claude · ⏹ detiene (`⌘⌥.`) |
 
-Documentación completa: [vscode/README.md](vscode/README.md)
+Documentación completa: [vscode/README.es.md](vscode/README.es.md)
 
 ## Chrome
 
@@ -57,7 +57,7 @@ Funciona en Chrome, Edge, Brave y Arc.
 
 **Consejo:** en Microsoft Edge tienes las voces neuronales "Online (Natural)" gratis, por ejemplo Salomé de Colombia. Son las que mejor suenan.
 
-Documentación completa: [chrome/README.md](chrome/README.md)
+Documentación completa: [chrome/README.es.md](chrome/README.es.md)
 
 ## Estructura del repositorio
 

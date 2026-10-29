@@ -1,86 +1,91 @@
-# Dilo para Chrome
+# Dilo for Chrome
 
-Escucha en lugar de leer: texto seleccionado, páginas completas y las respuestas de **Claude, ChatGPT y Gemini**, con un 🔊 junto al botón de copiar de cada respuesta.
+<p><b>English</b> · <a href="README.es.md">Español</a></p>
 
-Funciona en Chrome, Edge, Brave y Arc.
+Listen instead of reading: selected text, whole pages, and answers from **Claude, ChatGPT and Gemini**, with a 🔊 next to the Copy button on every answer.
 
-> Parte del proyecto [Dilo](https://github.com/chundo/dilo), que también tiene una extensión para VS Code.
+Works in Chrome, Edge, Brave and Arc.
 
-## Instalación (2 minutos, sin Chrome Web Store)
+> Part of the [Dilo](https://github.com/chundo/dilo) project, which also includes a VS Code extension.
 
-1. Abre `chrome://extensions` (en Edge: `edge://extensions`).
-2. Activa **Modo de desarrollador** (arriba a la derecha).
-3. Clic en **Cargar descomprimida** y elige la carpeta `chrome/` del repositorio (o descomprime `dilo-chrome-x.y.z.zip` de [Releases](https://github.com/chundo/dilo/releases)).
-4. Fija el ícono 🔊 en la barra con la chincheta del menú de extensiones.
-5. Recarga las pestañas que ya tenías abiertas para que la extensión funcione en ellas.
+## Installation (2 minutes, no Chrome Web Store needed)
 
-> Si macOS no te deja elegir la carpeta del Escritorio, dale permiso a Chrome en Ajustes del Sistema → Privacidad y seguridad → Archivos y carpetas.
+1. Open `chrome://extensions` (in Edge: `edge://extensions`).
+2. Turn on **Developer mode** (top right).
+3. Click **Load unpacked** and choose the repository's `chrome/` folder (or unzip `dilo-chrome-x.y.z.zip` from [Releases](https://github.com/chundo/dilo/releases)).
+4. Pin the 🔊 icon to the toolbar from the extensions menu.
+5. Reload any tabs you already had open so the extension runs in them.
 
-## Cómo se usa
+> If macOS won't let you pick a folder on your Desktop, give Chrome access in System Settings → Privacy & Security → Files and Folders.
 
-| Dónde | Qué haces | Qué pasa |
+## How to use it
+
+The interface is in Spanish for now. Menu labels are shown in **bold**.
+
+| Where | What you do | What happens |
 |---|---|---|
-| Cualquier página | Seleccionas texto → aparece un 🔊 flotante → clic | Lee la selección |
-| Cualquier página | Seleccionas → clic derecho → **🔊 Leer en voz alta** | Lee la selección |
-| Cualquier página | Clic derecho en un espacio vacío → **🔊 Leer esta página** | Lee el artículo o contenido principal (sin menús ni pie de página) |
-| Claude / ChatGPT / Gemini | 🔊 junto a **Copiar** en cada respuesta | Lee esa respuesta completa |
-| Mientras habla | El mismo botón cambia a ⏹ · clic derecho → **⏹ Detener** · `⌥⇧S` | Detiene |
+| Any page | Select text → a floating 🔊 appears → click it | Reads the selection |
+| Any page | Select → right-click → **🔊 Leer en voz alta** | Reads the selection |
+| Any page | Right-click on an empty spot → **🔊 Leer esta página** | Reads the article or main content (skips menus and footers) |
+| Claude / ChatGPT / Gemini | 🔊 next to **Copy** on each answer | Reads that whole answer |
+| While speaking | The same button turns into ⏹ · right-click → **⏹ Detener lectura** · `⌥⇧S` | Stops |
 
-**Atajos:** `⌥⇧R` (Alt+Shift+R) lee la selección; si no hay selección, lee la última respuesta del asistente o, si no estás en un asistente, la página completa. Pulsarlo otra vez detiene la lectura. `⌥⇧S` detiene. Puedes cambiarlos en `chrome://extensions/shortcuts`.
+**Shortcuts:** `⌥⇧R` (Alt+Shift+R) reads the selection. With nothing selected, it reads the latest assistant answer, or the whole page if you're not on an AI site. Press it again to stop. `⌥⇧S` stops. You can change them at `chrome://extensions/shortcuts`.
 
-Antes de leer se quitan los bloques de código, los botones, los enlaces largos y los símbolos de Markdown para que suene natural.
+Before reading, code blocks, buttons, long links and Markdown symbols are removed so it sounds natural.
 
-## Voces
+## Voices
 
-Clic en el ícono de la extensión → **Voz** → ▶ para escuchar una muestra.
+Click the extension icon → **Voz** → ▶ to hear a sample.
 
-- **Automática** (por defecto): elige la mejor voz en español disponible. Prefiere las "Natural", "Premium" o "Mejorada" y el español de Colombia o de México.
-- **Chrome en Mac:** usa las voces de macOS. Para tener voces mejores, ve a Ajustes del Sistema → Accesibilidad → Contenido leído → Voz del sistema → Gestionar voces y descarga **Paulina (Mejorada)**, **Mónica (Mejorada)** u otra. Después reinicia Chrome.
-- **Microsoft Edge:** trae las voces neuronales "Online (Natural)", como Salomé (Colombia) o Dalia (México). Son las de mejor calidad.
+- **Automatic** (default): picks the best Spanish voice available. It prefers "Natural", "Premium" or "Enhanced" voices, and Colombian or Mexican Spanish.
+- **Chrome on Mac:** uses macOS voices. For better ones, go to System Settings → Accessibility → Spoken Content → System Voice → Manage Voices, download an "Enhanced" or "Premium" voice, and restart Chrome.
+- **Microsoft Edge:** includes the "Online (Natural)" neural voices, such as Salomé (Colombia) or Dalia (Mexico). These sound the best.
+- Any voice in any language installed on your system can be chosen; the list shows Spanish voices first.
 
-## Ajustes (en el popup)
+## Settings (in the popup)
 
-- Voz y velocidad (0,6× a 2×)
-- Saltar bloques de código
-- Mostrar el 🔊 flotante al seleccionar texto
-- Mostrar el 🔊 en las respuestas de Claude, ChatGPT y Gemini
+- Voice and speed (0.6× to 2×)
+- Skip code blocks
+- Show the floating 🔊 when selecting text
+- Show the 🔊 on Claude, ChatGPT and Gemini answers
 
-Los ajustes se sincronizan con tu cuenta de Chrome.
+Settings sync with your Chrome account.
 
-## Estructura del proyecto
+## Project structure
 
 ```
 chrome/
-├── manifest.json   Permisos (contextMenus, tts, storage), atajos y scripts
-├── background.js   Service worker: menú del clic derecho, atajos y voz con chrome.tts
-├── content.js      En cada página: 🔊 flotante, 🔊 en asistentes y extracción del texto
-├── sitios.js       Selectores de Claude, ChatGPT y Gemini (lo único que hay que tocar si cambian)
-├── limpiar.js      Generado desde shared/limpiar.js (no lo edites aquí)
-├── popup.html/js   Ventana del ícono: botones y ajustes
-└── iconos/         16, 32, 48 y 128 px
+├── manifest.json   Permissions (contextMenus, tts, storage), shortcuts and scripts
+├── background.js   Service worker: context menu, shortcuts and speech via chrome.tts
+├── content.js      On every page: floating 🔊, 🔊 on AI sites and text extraction
+├── sitios.js       Selectors for Claude, ChatGPT and Gemini (the only file to touch if they change)
+├── limpiar.js      Generated from shared/limpiar.js (don't edit it here)
+├── popup.html/js   Toolbar popup: buttons and settings
+└── iconos/         16, 32, 48 and 128 px icons
 ```
 
-No tiene dependencias ni paso de compilación: es JavaScript plano.
+No dependencies and no build step: plain JavaScript.
 
-## Si el 🔊 no aparece en Claude, ChatGPT o Gemini
+## If the 🔊 doesn't show up on Claude, ChatGPT or Gemini
 
-Estos sitios cambian su HTML de vez en cuando. Para diagnosticarlo:
+These sites change their HTML from time to time. To diagnose it:
 
-1. Abre una conversación y haz clic en el ícono de la extensión. Abajo del popup verás algo como `Claude: 🔊 en 4 respuesta(s)` o `no encontré dónde poner el 🔊 (copiar: 0, respuestas: 3)`.
-2. Haz clic derecho sobre el botón **Copiar** de una respuesta → **Inspeccionar**, y fíjate en su `data-testid` o su `aria-label`.
-3. Actualiza `copiar` (y si hace falta `respuesta`) en `sitios.js`.
-4. En `chrome://extensions`, pulsa ↻ en la tarjeta de la extensión y recarga la página.
+1. Open a conversation and click the extension icon. At the bottom of the popup you'll see something like `Claude: 🔊 en 4 respuesta(s)` (found 4) or `no encontré dónde poner el 🔊 (copiar: 0, respuestas: 3)` (couldn't find where to put it).
+2. Right-click the **Copy** button of an answer → **Inspect**, and look at its `data-testid` or `aria-label`.
+3. Update `copiar` (and `respuesta` if needed) in `sitios.js`.
+4. In `chrome://extensions`, press ↻ on the extension card and reload the page.
 
-Para agregar otro asistente (Perplexity, Copilot…), añade una entrada a `sitios.js` con los mismos campos.
+To support another assistant (Perplexity, Copilot…), add an entry with the same fields to `sitios.js`. See [CONTRIBUTING.md](../CONTRIBUTING.md).
 
-## Desarrollo
+## Development
 
-- Después de editar un archivo: ↻ en `chrome://extensions` y recarga la pestaña.
-- Consola del service worker: `chrome://extensions` → enlace **service worker** de la tarjeta.
-- Los errores del content script salen en la consola normal de la página (⌥⌘I).
-- Para publicarla en la Chrome Web Store: `npm run build:chrome` en la raíz genera `dist/dilo-chrome-x.y.z.zip`, que se sube desde el Developer Dashboard (el registro cuesta USD 5 una sola vez).
+- After editing a file: press ↻ in `chrome://extensions` and reload the tab.
+- Service worker console: `chrome://extensions` → the **service worker** link on the card.
+- Content script errors show up in the page's normal console (⌥⌘I).
+- To publish on the Chrome Web Store: run `npm run build:chrome` from the repo root to get `dist/dilo-chrome-x.y.z.zip`, and upload it from the Developer Dashboard (one-time USD 5 registration fee).
 
-## Limitaciones
+## Limitations
 
-- No funciona en páginas internas (`chrome://`, Chrome Web Store) ni en el visor de PDF de Chrome. En esos casos, el clic derecho **Leer en voz alta** sigue funcionando con el texto plano que entrega Chrome.
-- Algunas voces de Google se cortan en frases largas. Por eso la extensión lee el texto en trozos cortos, y entre trozos puede notarse una pausa breve.
+- It doesn't run on internal pages (`chrome://`, the Chrome Web Store) or inside Chrome's PDF viewer. There, right-click → **Leer en voz alta** still works using the plain text Chrome provides.
+- Some Google voices cut off on long sentences, so the extension reads text in short chunks; you may notice a brief pause between them.

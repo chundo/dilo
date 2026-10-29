@@ -1,68 +1,72 @@
-# Dilo para VS Code
+# Dilo for VS Code
 
-Escucha en lugar de leer: texto seleccionado, archivos Markdown completos y las respuestas de Claude Code.
+<p><b>English</b> · <a href="README.es.md">Español</a></p>
 
-> Parte del proyecto [Dilo](https://github.com/chundo/dilo), que también tiene una extensión para Chrome.
+Listen instead of reading: selected text, whole Markdown files, and Claude Code answers.
 
-## Instalación
+> Part of the [Dilo](https://github.com/chundo/dilo) project, which also includes a Chrome extension.
 
-Descarga `dilo-x.y.z.vsix` desde [Releases](https://github.com/chundo/dilo/releases) y luego:
+## Installation
 
-- **Desde VS Code:** ⌘⇧P → *Extensions: Install from VSIX…* → elige el archivo → reinicia VS Code.
-- **Desde la terminal:**
+Download `dilo-x.y.z.vsix` from [Releases](https://github.com/chundo/dilo/releases), then:
+
+- **From VS Code:** ⌘⇧P / Ctrl+Shift+P → *Extensions: Install from VSIX…* → pick the file → restart VS Code.
+- **From the terminal:**
   ```bash
   code --install-extension dilo-0.1.0.vsix
   ```
-  En Mac, si `code` no existe: ⌘⇧P → *Shell Command: Install 'code' command in PATH*. Si sale `EPERM` desde Descargas, mueve el `.vsix` a otra carpeta o da acceso a la Terminal en Ajustes del Sistema → Privacidad y seguridad → Archivos y carpetas.
+  On Mac, if `code` isn't found: ⌘⇧P → *Shell Command: Install 'code' command in PATH*. If you get `EPERM` when installing from Downloads, move the `.vsix` to another folder or give Terminal access in System Settings → Privacy & Security → Files and Folders.
 
-## Cómo se usa
+## How to use it
 
-| Dónde | Qué haces | Qué pasa |
+The interface is in Spanish for now. Menu labels are shown in **bold**.
+
+| Where | What you do | What happens |
 |---|---|---|
-| Editor (cualquier archivo) | Seleccionas texto → clic derecho → **Leer en voz alta** | Lee la selección |
-| Archivo `.md` o su vista previa | Clic en el 🔊 de la barra de título | Lee el documento completo |
-| Panel de Claude Code | Seleccionas → clic derecho → **🔊 Leer en voz alta** | Lee la selección |
-| Panel de Claude Code | Clic derecho → **Leer última respuesta de Claude** | Lee la respuesta final completa |
-| Barra de estado | Clic en 🔊 | Lee la última respuesta de Claude |
-| Mientras habla | ⏹ en la barra de título o de estado | Detiene |
+| Editor (any file) | Select text → right-click → **Leer en voz alta** | Reads the selection |
+| `.md` file or its preview | Click the 🔊 in the title bar | Reads the whole document |
+| Claude Code panel | Select → right-click → **🔊 Leer en voz alta** | Reads the selection |
+| Claude Code panel | Right-click → **Leer última respuesta de Claude** | Reads the full final answer |
+| Status bar | Click 🔊 | Reads the latest Claude answer |
+| While speaking | ⏹ in the title bar or status bar | Stops |
 
-**Atajos (Mac):** `⌘⌥R` leer selección · `⌘⌥L` última respuesta de Claude · `⌘⌥.` detener. En Windows/Linux, `Ctrl+Alt` en lugar de `⌘⌥`.
+**Shortcuts (Mac):** `⌘⌥R` read selection · `⌘⌥L` latest Claude answer · `⌘⌥.` stop. On Windows/Linux use `Ctrl+Alt` instead of `⌘⌥`.
 
-**Lectura automática:** comando *Dilo: Activar/desactivar lectura automática de Claude*. Cada vez que Claude termina un turno, te lee la respuesta.
+**Auto-read:** run *Dilo: Activar/desactivar lectura automática de Claude* (toggle auto-read). Every time Claude finishes a turn, the answer is read to you.
 
-Antes de leer, se limpian los bloques de código, enlaces, tablas y símbolos de Markdown para que suene natural.
+Before reading, code blocks, links, tables and Markdown symbols are cleaned up so it sounds natural.
 
-## Voces
+## Voices
 
-- **say** (por defecto en macOS): voz del sistema, sin internet. Ejecuta *Dilo: Elegir voz* para escuchar muestras. Para voces mejores: Ajustes del Sistema → Accesibilidad → Contenido leído → Voz del sistema → Gestionar voces, y descarga una "Mejorada" o "Premium" en español.
-- **edge-tts**: voces neuronales de Microsoft, gratis y muy naturales (requiere internet).
+- **say** (default on macOS): the system voice, works offline. Run *Dilo: Elegir voz* (choose voice) to hear samples. For better voices: System Settings → Accessibility → Spoken Content → System Voice → Manage Voices, and download an "Enhanced" or "Premium" voice.
+- **edge-tts**: Microsoft's neural voices, free and very natural (needs internet).
   ```bash
-  pipx install edge-tts   # o: pip install edge-tts
+  pipx install edge-tts   # or: pip install edge-tts
   ```
-  Luego, en ajustes: `dilo.motor` = `edge-tts`. Si VS Code no lo encuentra, pon la ruta completa en `dilo.rutaEdgeTts` (ej. `~/.local/bin/edge-tts`).
-- En Windows usa la voz del sistema (System.Speech) y en Linux `spd-say`.
+  Then set `dilo.motor` to `edge-tts`. If VS Code can't find it, put the full path in `dilo.rutaEdgeTts` (e.g. `~/.local/bin/edge-tts`).
+- On Windows it uses the system voice (System.Speech); on Linux, `spd-say`.
 
-## Ajustes
+## Settings
 
-| Ajuste | Por defecto | Para qué |
+| Setting | Default | What it does |
 |---|---|---|
-| `dilo.motor` | `say` | `say` (voz del sistema) o `edge-tts` |
-| `dilo.vozSay` | vacío | Voz de macOS (vacío = voz del sistema) |
-| `dilo.velocidadSay` | `200` | Palabras por minuto |
-| `dilo.vozEdge` | `es-CO-SalomeNeural` | Voz de edge-tts |
-| `dilo.velocidadEdge` | `+10%` | Velocidad de edge-tts |
-| `dilo.rutaEdgeTts` | `edge-tts` | Ruta al ejecutable si no está en el PATH |
-| `dilo.omitirCodigo` | `true` | Saltar bloques de código |
-| `dilo.autoLeerClaude` | `false` | Leer cada respuesta de Claude al terminar |
-| `dilo.carpetaClaude` | `~/.claude/projects` | Dónde están las sesiones de Claude Code |
+| `dilo.motor` | `say` | Speech engine: `say` (system voice) or `edge-tts` |
+| `dilo.vozSay` | empty | macOS voice (empty = system voice) |
+| `dilo.velocidadSay` | `200` | Words per minute |
+| `dilo.vozEdge` | `es-CO-SalomeNeural` | edge-tts voice |
+| `dilo.velocidadEdge` | `+10%` | edge-tts speed |
+| `dilo.rutaEdgeTts` | `edge-tts` | Path to the executable if it's not on the PATH |
+| `dilo.omitirCodigo` | `true` | Skip code blocks |
+| `dilo.autoLeerClaude` | `false` | Read every Claude answer when it finishes |
+| `dilo.carpetaClaude` | `~/.claude/projects` | Where Claude Code stores its sessions |
 
-## Notas técnicas
+## Technical notes
 
-- En los paneles web (Claude, vista previa Markdown) VS Code no entrega la selección a las extensiones. Por eso Dilo copia el texto, lo lee desde el portapapeles y después restaura lo que había ahí.
-- La última respuesta se lee de `~/.claude/projects/<proyecto>/*.jsonl`. Se prioriza el proyecto abierto en VS Code y se toma solo el texto final, sin la narración entre herramientas.
-- La opción "Leer última respuesta" del clic derecho aparece en los paneles cuyo identificador contiene "claude". Si no la ves, ajusta la condición `webviewId` en `package.json`.
-- Sin dependencias de npm: es JavaScript plano sobre la API de VS Code.
+- In webview panels (Claude, Markdown preview), VS Code doesn't give extensions the selected text. Dilo copies the selection, reads it from the clipboard, and then restores whatever was on the clipboard before.
+- The latest answer is read from `~/.claude/projects/<project>/*.jsonl`. It prefers the project open in VS Code and takes only the final text, without the narration between tool calls.
+- The **Leer última respuesta** right-click option appears in panels whose ID contains "claude". If you don't see it, adjust the `webviewId` condition in `package.json`.
+- No npm dependencies: plain JavaScript on top of the VS Code API.
 
-## Desarrollo
+## Development
 
-Abre la carpeta `vscode/` en VS Code y pulsa **F5**: se abre una ventana con la extensión cargada. Para empaquetar, desde la raíz del repo: `npm run build:vscode`.
+Open the `vscode/` folder in VS Code and press **F5**: a new window opens with the extension loaded. To package it, run `npm run build:vscode` from the repo root.
